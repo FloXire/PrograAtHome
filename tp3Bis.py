@@ -46,4 +46,54 @@ def trajet(labyrinthe):
 
     sortie(labyrinthe, placePerso, trajet)
 
-trajet(labyrinthe)
+#trajet(labyrinthe)
+
+a = {1:2}
+a[2]=3
+print(a)
+
+def inDico(dico, cle, placeAPrendre):
+    if placeAPrendre == -1:
+        if cle in dico:
+            return True
+    if (cle in dico) and (placeAPrendre in dico[cle]):
+        return True
+    else:
+        return False
+
+def trajetIter(labyrinthe):
+
+    placePerso = (1,1)
+    dicoComportement = {(1,1):[]}
+    print(dicoComportement)
+    
+    while labyrinthe[placePerso[0]][placePerso[1]] != 2:
+        print(placePerso)
+        #peut etre faire avec une liste de croisements et de trajet, revenir au dernier croisement
+        #quand on est revenu sur nos pas
+        if labyrinthe[placePerso[0]-1][placePerso[1]] in (0,2) and \
+           not(inDico(dicoComportement, placePerso, (placePerso[0]-1,placePerso[1]))): #en haut
+            if not(inDico(dicoComportement, placePerso, -1)):
+                dicoComportement[placePerso] = []
+            dicoComportement[placePerso].append((placePerso[0]-1,placePerso[1]))
+            placePerso = (placePerso[0]-1,placePerso[1])
+        elif labyrinthe[placePerso[0]+1][placePerso[1]] in (0,2) and \
+           not(inDico(dicoComportement, placePerso, (placePerso[0]+1,placePerso[1]))): #en bas
+            if not(inDico(dicoComportement, placePerso, -1)):
+                dicoComportement[placePerso] = []
+            dicoComportement[placePerso].append((placePerso[0]+1, placePerso[1]))
+            placePerso = (placePerso[0]+1,placePerso[1])
+        elif labyrinthe[placePerso[0]][placePerso[1]-1] in (0,2) and \
+           not(inDico(dicoComportement, placePerso, (placePerso[0],placePerso[1]-1))): #a gauche
+            if not(inDico(dicoComportement, placePerso, -1)):
+                dicoComportement[placePerso] = []
+            dicoComportement[placePerso].append((placePerso[0], placePerso[1]-1))
+            placePerso = (placePerso[0],placePerso[1]-1)
+        elif labyrinthe[placePerso[0]][placePerso[1]+1] in (0,2) and \
+           not(inDico(dicoComportement, placePerso, (placePerso[0],placePerso[1]+1))): #a droite
+            if not(inDico(dicoComportement, placePerso, -1)):
+                dicoComportement[placePerso] = []
+            dicoComportement[placePerso].append((placePerso[0], placePerso[1]+1))
+            placePerso = (placePerso[0],placePerso[1]+1)
+        
+trajetIter(labyrinthe)
